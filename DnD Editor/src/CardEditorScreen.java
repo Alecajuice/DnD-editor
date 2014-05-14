@@ -1,7 +1,10 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.*;
 
@@ -16,12 +19,14 @@ public class CardEditorScreen extends JPanel implements ActionListener
 	JComboBox powerType = new JComboBox(powerTypes);
 	String[] tiers = {"Power Tier", "Heroic", "Paragon", "Epic"};
 	JComboBox tier = new JComboBox(tiers);
-	String[] actionTypes = {"Action Type", "Standard Action", "Minor Action", "Free Action"};
+	String[] actionTypes = {"Action Type", "Standard Action", "Minor Action", "Immediate Interrupt", "Free Action", "No Action"};
 	JComboBox actionType = new JComboBox(actionTypes);
-	String[] attackTypes = {"Power Type", "At-Will", "Encounter", "Daily"};
+	String[] attackTypes = {"Power Type", "Personal", "Ranged", "Melee", "Close Burst", "Burst", "Touch", "Melee or Ranged"};
 	JComboBox attackType = new JComboBox(attackTypes);
 	String[] classes = {};
 	JComboBox classs = new JComboBox(classes);
+	JTextField name = new JTextField(40);
+	CardPanel canvas = new CardPanel();
 	public CardEditorScreen(Card card)
 	{
 		this.card = card;
@@ -43,7 +48,10 @@ public class CardEditorScreen extends JPanel implements ActionListener
 			
 			break;
 		}
+		JPanel center = new JPanel();
+		center.add(canvas, BorderLayout.CENTER);
 		this.add(toolBar, BorderLayout.NORTH);
+		this.add(center, BorderLayout.CENTER);
 	}
 
 	public void setUpPowerEditor()
@@ -70,29 +78,59 @@ public class CardEditorScreen extends JPanel implements ActionListener
 	public void actionPerformed(ActionEvent e)
 	{
 		JComboBox c = (JComboBox)e.getSource();
-		switch((String)c.getSelectedItem())
+		if(c.equals(powerType))
 		{
-		case "At-Will":
-			card.
+			card.setPowerType((String)c.getSelectedItem());
+		}
+		else if(c.equals(tier))
+		{
+			card.setTier((String)c.getSelectedItem());
+		}
+		else if(c.equals(actionType))
+		{
+			card.setActionType((String)c.getSelectedItem());
+		}
+		else if(c.equals(attackType))
+		{
+			card.setAttackType((String)c.getSelectedItem());
+		}
+		else if(c.equals(classs))
+		{
+			card.setClasss((String)c.getSelectedItem());
+		}
+		System.out.println((String)c.getSelectedItem());
+		canvas.repaint();
+	}
+	class CardPanel extends JPanel
+	{
+		public CardPanel()
+		{
+			this.setBounds(0, 0, 375, 525);
+			this.setLayout(null);
+			name.setBounds(75, 30, 300, 20);
+			this.add(name);
 		}
 		
+		public Dimension getPreferredSize() {
+	        return new Dimension(375, 525);
+	    }
+		
+		
+		public void paintComponent(Graphics g)
+		{
+			super.paintComponent(g);
+			try {
+				g.drawImage(ImageIO.read(new File("magic-missile.jpg")), 0, 0, null);
+			} catch (IOException e) {
+			}
+			g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+			g.setColor(Color.RED);
+			try {
+				g.drawString(card.getPowerType(), 90, 105);
+			} catch(Exception e){
+			}
+		}
 	}
 }
 
-class CardPanel extends JPanel
-{
-	public CardPanel()
-	{
-		
-	}
-	
-	public Dimension getPreferredSize() {
-        return new Dimension(375, 525);
-    }
-	
-	
-	public void paintComponent(Graphics g)
-	{
-		super.paintComponent(g);
-	}
-}
+
