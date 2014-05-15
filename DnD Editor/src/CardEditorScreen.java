@@ -63,6 +63,7 @@ public class CardEditorScreen extends JPanel implements ActionListener
 		    name.setForeground(new Color(239, 237, 217));
 		    keywords.setForeground(new Color(95, 8, 14));
 		    name.setHorizontalAlignment(JTextField.CENTER);
+		    name.addActionListener(this);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -158,6 +159,19 @@ public class CardEditorScreen extends JPanel implements ActionListener
 		{
 			Graphics2D g = (Graphics2D)g1d; 
 			super.paintComponent(g);
+			FontMetrics metricst = g.getFontMetrics(titleFont);
+			if(metricst.stringWidth(name.getText()) > 300)
+			{
+				titleFont = titleFont.deriveFont((float)(titleFont.getSize() - 1));
+				name.setFont(titleFont);
+				metricst = g.getFontMetrics(titleFont);
+			}
+			if(metricst.stringWidth(name.getText()) < 285 && titleFont.getSize() < 30)
+			{
+				titleFont = titleFont.deriveFont((float)(titleFont.getSize() + 1));
+				name.setFont(titleFont);
+				metricst = g.getFontMetrics(titleFont);
+			}
 			g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 			try {
 				g.drawImage(card.getBgImage(), 0, 0, null);
