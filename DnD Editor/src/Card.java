@@ -26,6 +26,10 @@ public class Card
 	public Card(CardType type)
 	{
 		this.type = type;
+		try {
+			bgImage = ImageIO.read(new File("img/parchment.png"));
+		} catch (IOException e) {
+		}
 		setBgImage(type);
 	}
 
@@ -116,6 +120,7 @@ public class Card
 		{
 		case "At-Will":
 			try {
+				System.out.println("hi");
 				this.powerTypeImage = ImageIO.read(new File("img/atwill.png"));
 			} catch (IOException e) {
 			}
@@ -125,37 +130,38 @@ public class Card
 				{
 				case "Standard Action":
 					try {
-						this.powerTypeImage = ImageIO.read(new File("img/standardatwill.png"));
+						this.actionTypeImage = ImageIO.read(new File("img/standardatwill.png"));
 					} catch (IOException e) {
 					}
 					break;
 				case "Minor Action":
 					try {
-						this.powerTypeImage = ImageIO.read(new File("img/minoratwill.png"));
+						this.actionTypeImage = ImageIO.read(new File("img/minoratwill.png"));
 					} catch (IOException e) {
 					}
 					break;
 				case "Immediate Interrupt":
 					try {
-						this.powerTypeImage = ImageIO.read(new File("img/immediateatwill.png"));
+						this.actionTypeImage = ImageIO.read(new File("img/immediateatwill.png"));
 					} catch (IOException e) {
 					}
 					break;
 				case "Free Action":
 					try {
-						this.powerTypeImage = ImageIO.read(new File("img/freeatwill.png"));
+						this.actionTypeImage = ImageIO.read(new File("img/freeatwill.png"));
 					} catch (IOException e) {
 					}
 					break;
 				case "No Action":
 					try {
-						this.powerTypeImage = ImageIO.read(new File("img/freeatwill.png"));
+						this.actionTypeImage = ImageIO.read(new File("img/freeatwill.png"));
 					} catch (IOException e) {
 					}
 					break;
 				}
 				break;
 			}
+			break;
 		case "Encounter":
 			try {
 				this.powerTypeImage = ImageIO.read(new File("img/encounter.png"));
@@ -167,39 +173,41 @@ public class Card
 				{
 				case "Standard Action":
 					try {
-						this.powerTypeImage = ImageIO.read(new File("img/standardattackType.png"));
+						this.actionTypeImage = ImageIO.read(new File("img/standardencounter.png"));
 					} catch (IOException e) {
 					}
 					break;
 				case "Minor Action":
 					try {
-						this.powerTypeImage = ImageIO.read(new File("img/minorattackType.png"));
+						this.actionTypeImage = ImageIO.read(new File("img/minorencounter.png"));
 					} catch (IOException e) {
 					}
 					break;
 				case "Immediate Interrupt":
 					try {
-						this.powerTypeImage = ImageIO.read(new File("img/immediateattackType.png"));
+						this.actionTypeImage = ImageIO.read(new File("img/immediateencounter.png"));
 					} catch (IOException e) {
 					}
 					break;
 				case "Free Action":
 					try {
-						this.powerTypeImage = ImageIO.read(new File("img/freeattackType.png"));
+						this.actionTypeImage = ImageIO.read(new File("img/freeencounter.png"));
 					} catch (IOException e) {
 					}
 					break;
 				case "No Action":
 					try {
-						this.powerTypeImage = ImageIO.read(new File("img/freeattackType.png"));
+						this.actionTypeImage = ImageIO.read(new File("img/freeencounter.png"));
 					} catch (IOException e) {
 					}
 					break;
 				}
-			break;
+				break;
 			}
+			break;
 		case "Daily":
 			try {
+				System.out.println("dfkj");
 				this.powerTypeImage = ImageIO.read(new File("img/daily.png"));
 			} catch (IOException e) {
 			}
@@ -209,37 +217,38 @@ public class Card
 				{
 				case "Standard Action":
 					try {
-						this.powerTypeImage = ImageIO.read(new File("img/standarddaily.png"));
+						this.actionTypeImage = ImageIO.read(new File("img/standarddaily.png"));
 					} catch (IOException e) {
 					}
 					break;
 				case "Minor Action":
 					try {
-						this.powerTypeImage = ImageIO.read(new File("img/minordaily.png"));
+						this.actionTypeImage = ImageIO.read(new File("img/minordaily.png"));
 					} catch (IOException e) {
 					}
 					break;
 				case "Immediate Interrupt":
 					try {
-						this.powerTypeImage = ImageIO.read(new File("img/immediatedaily.png"));
+						this.actionTypeImage = ImageIO.read(new File("img/immediatedaily.png"));
 					} catch (IOException e) {
 					}
 					break;
 				case "Free Action":
 					try {
-						this.powerTypeImage = ImageIO.read(new File("img/freedaily.png"));
+						this.actionTypeImage = ImageIO.read(new File("img/freedaily.png"));
 					} catch (IOException e) {
 					}
 					break;
 				case "No Action":
 					try {
-						this.powerTypeImage = ImageIO.read(new File("img/freedaily.png"));
+						this.actionTypeImage = ImageIO.read(new File("img/freedaily.png"));
 					} catch (IOException e) {
 					}
 					break;
 				}
 			break;
 			}
+		break;
 		}
 	}
 
@@ -255,19 +264,19 @@ public class Card
 		{
 		case "Heroic":
 			try {
-				this.powerTypeImage = ImageIO.read(new File("img/heroic.png"));
+				this.tierImage = ImageIO.read(new File("img/heroic.png"));
 			} catch (IOException e) {
 			}
 			break;
 		case "Paragon":
 			try {
-				this.powerTypeImage = ImageIO.read(new File("img/paragon.png"));
+				this.tierImage = ImageIO.read(new File("img/paragon.png"));
 			} catch (IOException e) {
 			}
 			break;
 		case "Epic":
 			try {
-				this.powerTypeImage = ImageIO.read(new File("img/epic.png"));
+				this.tierImage = ImageIO.read(new File("img/epic.png"));
 			} catch (IOException e) {
 			}
 			break;
@@ -288,117 +297,105 @@ public class Card
 			switch(powerType)
 			{
 			case "At-Will":
-				try {
-					this.powerTypeImage = ImageIO.read(new File("img/atwill.png"));
-				} catch (IOException e) {
-				}
 				switch(actionType)
 				{
 				case "Standard Action":
 					try {
-						this.powerTypeImage = ImageIO.read(new File("img/standardatwill.png"));
+						this.actionTypeImage = ImageIO.read(new File("img/standardatwill.png"));
 					} catch (IOException e) {
 					}
 					break;
 				case "Minor Action":
 					try {
-						this.powerTypeImage = ImageIO.read(new File("img/minoratwill.png"));
+						this.actionTypeImage = ImageIO.read(new File("img/minoratwill.png"));
 					} catch (IOException e) {
 					}
 					break;
 				case "Immediate Interrupt":
 					try {
-						this.powerTypeImage = ImageIO.read(new File("img/immediateatwill.png"));
+						this.actionTypeImage = ImageIO.read(new File("img/immediateatwill.png"));
 					} catch (IOException e) {
 					}
 					break;
 				case "Free Action":
 					try {
-						this.powerTypeImage = ImageIO.read(new File("img/freeatwill.png"));
+						this.actionTypeImage = ImageIO.read(new File("img/freeatwill.png"));
 					} catch (IOException e) {
 					}
 					break;
 				case "No Action":
 					try {
-						this.powerTypeImage = ImageIO.read(new File("img/freeatwill.png"));
+						this.actionTypeImage = ImageIO.read(new File("img/freeatwill.png"));
 					} catch (IOException e) {
 					}
 					break;
 				}
 				break;
 			case "Encounter":
-				try {
-					this.powerTypeImage = ImageIO.read(new File("img/encounter.png"));
-				} catch (IOException e) {
-				}
 				switch(actionType)
 				{
 				case "Standard Action":
 					try {
-						this.powerTypeImage = ImageIO.read(new File("img/standardattackType.png"));
+						this.actionTypeImage = ImageIO.read(new File("img/standardencounter.png"));
 					} catch (IOException e) {
 					}
 					break;
 				case "Minor Action":
 					try {
-						this.powerTypeImage = ImageIO.read(new File("img/minorattackType.png"));
+						this.actionTypeImage = ImageIO.read(new File("img/minorencounter.png"));
 					} catch (IOException e) {
 					}
 					break;
 				case "Immediate Interrupt":
 					try {
-						this.powerTypeImage = ImageIO.read(new File("img/immediateattackType.png"));
+						this.actionTypeImage = ImageIO.read(new File("img/immediateencounter.png"));
 					} catch (IOException e) {
 					}
 					break;
 				case "Free Action":
 					try {
-						this.powerTypeImage = ImageIO.read(new File("img/freeattackType.png"));
+						this.actionTypeImage = ImageIO.read(new File("img/freeencounter.png"));
 					} catch (IOException e) {
 					}
 					break;
 				case "No Action":
 					try {
-						this.powerTypeImage = ImageIO.read(new File("img/freeattackType.png"));
+						this.actionTypeImage = ImageIO.read(new File("img/freeencounter.png"));
 					} catch (IOException e) {
 					}
 					break;
 				}
 				break;
 			case "Daily":
-				try {
-					this.powerTypeImage = ImageIO.read(new File("img/daily.png"));
-				} catch (IOException e) {
-				}
 				switch(actionType)
 				{
 				case "Standard Action":
 					try {
-						this.powerTypeImage = ImageIO.read(new File("img/standarddaily.png"));
+						this.actionTypeImage = ImageIO.read(new File("img/standarddaily.png"));
 					} catch (IOException e) {
 					}
 					break;
 				case "Minor Action":
 					try {
-						this.powerTypeImage = ImageIO.read(new File("img/minordaily.png"));
+						this.actionTypeImage = ImageIO.read(new File("img/minordaily.png"));
 					} catch (IOException e) {
 					}
 					break;
 				case "Immediate Interrupt":
 					try {
-						this.powerTypeImage = ImageIO.read(new File("img/immediatedaily.png"));
+						this.actionTypeImage = ImageIO.read(new File("img/immediatedaily.png"));
 					} catch (IOException e) {
 					}
 					break;
 				case "Free Action":
 					try {
-						this.powerTypeImage = ImageIO.read(new File("img/freedaily.png"));
+						this.actionTypeImage = ImageIO.read(new File("img/freedaily.png"));
 					} catch (IOException e) {
 					}
 					break;
 				case "No Action":
 					try {
-						this.powerTypeImage = ImageIO.read(new File("img/freedaily.png"));
+						this.actionTypeImage = ImageIO.read(new File("img/freedaily.png"));
 					} catch (IOException e) {
 					}
 					break;
@@ -420,43 +417,49 @@ public class Card
 		{
 		case "Personal":
 			try {
-				this.powerTypeImage = ImageIO.read(new File("img/personal.png"));
+				this.attackTypeImage = ImageIO.read(new File("img/personal.png"));
 			} catch (IOException e) {
 			}
 			break;
 		case "Ranged":
 			try {
-				this.powerTypeImage = ImageIO.read(new File("img/ranged.png"));
+				this.attackTypeImage = ImageIO.read(new File("img/ranged.png"));
 			} catch (IOException e) {
 			}
 			break;
-		case "Melee":
+		case "Melee Weapon":
 			try {
-				this.powerTypeImage = ImageIO.read(new File("img/melee.png"));
+				this.attackTypeImage = ImageIO.read(new File("img/melee.png"));
+			} catch (IOException e) {
+			}
+			break;
+		case "Ranged Weapon":
+			try {
+				this.attackTypeImage = ImageIO.read(new File("img/ranged.png"));
 			} catch (IOException e) {
 			}
 			break;
 		case "Close Burst":
 			try {
-				this.powerTypeImage = ImageIO.read(new File("img/burst_c.png"));
+				this.attackTypeImage = ImageIO.read(new File("img/burst_c.png"));
 			} catch (IOException e) {
 			}
 			break;
-		case "Burst":
+		case "Area":
 			try {
-				this.powerTypeImage = ImageIO.read(new File("img/burst_r.png"));
+				this.attackTypeImage = ImageIO.read(new File("img/burst_r.png"));
 			} catch (IOException e) {
 			}
 			break;
-		case "Touch":
+		case "Melee Touch":
 			try {
-				this.powerTypeImage = ImageIO.read(new File("img/touch.png"));
+				this.attackTypeImage = ImageIO.read(new File("img/touch.png"));
 			} catch (IOException e) {
 			}
 			break;
-		case "Melee or Ranged":
+		case "Melee or Ranged Weapon":
 			try {
-				this.powerTypeImage = ImageIO.read(new File("img/hybrid.png"));
+				this.attackTypeImage = ImageIO.read(new File("img/hybrid.png"));
 			} catch (IOException e) {
 			}
 			break;
