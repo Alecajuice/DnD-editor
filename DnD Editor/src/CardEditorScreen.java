@@ -9,6 +9,10 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.*;
+import javax.swing.text.MutableAttributeSet;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 
 
 public class CardEditorScreen extends JPanel implements ActionListener
@@ -27,12 +31,14 @@ public class CardEditorScreen extends JPanel implements ActionListener
 	JComboBox actionType = new JComboBox(actionTypes);
 	String[] attackTypes = {"Power Type", "Personal", "Ranged", "Melee Weapon", "Ranged Weapon", "Close Burst", "Area", "Melee Touch", "Melee or Ranged Weapon"};
 	JComboBox attackType = new JComboBox(attackTypes);
-	String[] classes = {};
+	String[] classes = {"Classes", "Ardent", "Artificer", "Assassin", "Avenger", "Barbarian", "Bard", "Battlemind", "Bladesinger", "Cleric", "Druid", "Fighter", "Invoker", "Monk", "Paladin", "Psion", "Ranger", "Rogue", "Runepriest", "Seeker", "Shaman", "Sorceror", "Swordmage", "Vampire", "Warden", "Warlock", "Warlord", "Wizard"};
 	JComboBox classs = new JComboBox(classes);
 	JTextField name = new JTextField();
 	JTextField keywords = new JTextField();
 	JTextField attackTypeParameter1 = new JTextField();
 	JTextField attackTypeParameter2 = new JTextField();
+	JTextField typeLevel = new JTextField();
+	JTextPane flavor = new JTextPane();
 	CardPanel canvas = new CardPanel();
 	public CardEditorScreen(Card card)
 	{
@@ -52,17 +58,28 @@ public class CardEditorScreen extends JPanel implements ActionListener
 		    keywords.setFont(font);
 		    attackTypeParameter1.setFont(font);
 		    attackTypeParameter2.setFont(font);
+		    typeLevel.setFont(font);
 		    name.setOpaque(false);
 		    keywords.setOpaque(false);
 		    attackTypeParameter1.setOpaque(false);
 		    attackTypeParameter2.setOpaque(false);
+		    typeLevel.setOpaque(false);
+		    flavor.setOpaque(false);
 		    name.setBackground(new Color(0, 0, 0 ,0));
 		    keywords.setBackground(new Color(0, 0, 0 ,0));
 		    attackTypeParameter1.setBackground(new Color(0, 0, 0 ,0));
 		    attackTypeParameter2.setBackground(new Color(0, 0, 0 ,0));
+		    typeLevel.setBackground(new Color(0, 0, 0, 0));
+//		    flavor.setBackground(new Color(0, 0, 0 ,0));
+		    flavor.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
 		    name.setForeground(new Color(239, 237, 217));
+		    typeLevel.setForeground(new Color(239, 237, 217));
 		    keywords.setForeground(new Color(95, 8, 14));
+		    setJTextPaneFont(flavor, font.deriveFont(Font.ITALIC, 15.0f), new Color(115, 131, 255));
 		    name.setHorizontalAlignment(JTextField.CENTER);
+		    SimpleAttributeSet attribs = new SimpleAttributeSet();  
+		    StyleConstants.setAlignment(attribs , StyleConstants.ALIGN_CENTER);  
+		    flavor.setParagraphAttributes(attribs,true);  
 		    name.addActionListener(this);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -148,6 +165,8 @@ public class CardEditorScreen extends JPanel implements ActionListener
 			this.add(keywords);
 			this.add(attackTypeParameter1);
 			this.add(attackTypeParameter2);
+			this.add(typeLevel);
+			this.add(flavor);
 		}
 		
 		public Dimension getPreferredSize() {
@@ -251,7 +270,31 @@ public class CardEditorScreen extends JPanel implements ActionListener
 				}
 			} catch(Exception e){
 			}
+			try {
+				g.setFont(font);
+				g.setColor(new Color(239, 237, 217));
+				g.drawString(card.getClasss(), 10, 505);
+			} catch(Exception e)
+			{
+			}
+			try {
+				typeLevel.setBounds(15 + metrics.stringWidth(card.getClasss()), 490, 300 - metrics.stringWidth(card.getClasss()), 20);
+			} catch(Exception e)
+			{
+			}
+			flavor.setBounds(10, 400, 355, 60);
 		}
+	}
+	public static void setJTextPaneFont(JTextPane jtp, Font font, Color c)
+	{
+		MutableAttributeSet attrs = jtp.getInputAttributes();
+		StyleConstants.setFontFamily(attrs, font.getFamily());
+		StyleConstants.setFontSize(attrs, font.getSize());
+		StyleConstants.setItalic(attrs, (font.getStyle() & Font.ITALIC) != 0);
+		StyleConstants.setBold(attrs, (font.getStyle() & Font.BOLD) != 0);
+		StyleConstants.setForeground(attrs, c);
+		StyledDocument doc = jtp.getStyledDocument();
+		doc.setCharacterAttributes(0, doc.getLength() + 1, attrs, false);
 	}
 }
 
