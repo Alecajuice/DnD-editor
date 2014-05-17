@@ -1,8 +1,11 @@
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.swing.JTextField;
+import javax.swing.JTextPane;
 
 
 public class Card
@@ -22,6 +25,13 @@ public class Card
 	private String actionType;
 	private String attackType;
 	private String classs;
+	private String name;
+	private String keywords;
+	private String attackTypeParameter1;
+	private String attackTypeParameter2;
+	private String typeLevel;
+	private String flavor;
+	private ArrayList<String> body = new ArrayList<String>();
 
 	public Card(CardType type)
 	{
@@ -474,5 +484,75 @@ public class Card
 	public void setClasss(String classs)
 	{
 		this.classs = classs;
+	}
+
+	public String getName()
+	{
+		return name;
+	}
+
+	public void setName(String name)
+	{
+		this.name = name;
+	}
+
+	public String getKeywords()
+	{
+		return keywords;
+	}
+
+	public void setKeywords(String keywords)
+	{
+		this.keywords = keywords;
+	}
+
+	public String getAttackTypeParameter1()
+	{
+		return attackTypeParameter1;
+	}
+
+	public void setAttackTypeParameter1(String attackTypeParameter1)
+	{
+		this.attackTypeParameter1 = attackTypeParameter1;
+	}
+
+	public String getAttackTypeParameter2()
+	{
+		return attackTypeParameter2;
+	}
+
+	public void setAttackTypeParameter2(String attackTypeParameter2)
+	{
+		this.attackTypeParameter2 = attackTypeParameter2;
+	}
+
+	public String getTypeLevel()
+	{
+		return typeLevel;
+	}
+
+	public void setTypeLevel(String typeLevel)
+	{
+		this.typeLevel = typeLevel;
+	}
+
+	public String getFlavor()
+	{
+		return flavor;
+	}
+
+	public void setFlavor(String flavor)
+	{
+		this.flavor = flavor;
+	}
+
+	public ArrayList<String> getBody()
+	{
+		return body;
+	}
+
+	public void setBody(ArrayList<String> body)
+	{
+		this.body = body;
 	}
 }

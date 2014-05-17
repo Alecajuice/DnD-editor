@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -39,6 +40,7 @@ public class CardEditorScreen extends JPanel implements ActionListener
 	JTextField attackTypeParameter2 = new JTextField();
 	JTextField typeLevel = new JTextField();
 	JTextPane flavor = new JTextPane();
+	ArrayList<String> body = new ArrayList<String>();
 	CardPanel canvas = new CardPanel();
 	public CardEditorScreen(Card card)
 	{
@@ -176,6 +178,7 @@ public class CardEditorScreen extends JPanel implements ActionListener
 		
 		public void paintComponent(Graphics g1d)
 		{
+			System.out.println(flavor.getText());
 			Graphics2D g = (Graphics2D)g1d; 
 			super.paintComponent(g);
 			FontMetrics metricst = g.getFontMetrics(titleFont);
@@ -282,7 +285,7 @@ public class CardEditorScreen extends JPanel implements ActionListener
 			} catch(Exception e)
 			{
 			}
-			flavor.setBounds(10, 400, 355, 60);
+			flavor.setBounds(10, 400, 285, 60);
 		}
 	}
 	public static void setJTextPaneFont(JTextPane jtp, Font font, Color c)
