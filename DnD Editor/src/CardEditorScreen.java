@@ -40,8 +40,10 @@ public class CardEditorScreen extends JPanel implements ActionListener
 	JTextField attackTypeParameter2 = new JTextField();
 	JTextField typeLevel = new JTextField();
 	JTextPane flavor = new JTextPane();
-	ArrayList<String> body = new ArrayList<String>();
-	CardPanel canvas = new CardPanel();
+	ArrayList<BodyParam> body = new ArrayList<BodyParam>();
+	JButton newParam = new JButton("+");
+	JButton delParam = new JButton("-");
+	CardPanel canvas;
 	public CardEditorScreen(Card card)
 	{
 		this.card = card;
@@ -56,33 +58,9 @@ public class CardEditorScreen extends JPanel implements ActionListener
 			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		    ge.registerFont(font);
 		    font = font.deriveFont(20.0f);
-		    name.setFont(titleFont);
-		    keywords.setFont(font);
-		    attackTypeParameter1.setFont(font);
-		    attackTypeParameter2.setFont(font);
-		    typeLevel.setFont(font);
-		    name.setOpaque(false);
-		    keywords.setOpaque(false);
-		    attackTypeParameter1.setOpaque(false);
-		    attackTypeParameter2.setOpaque(false);
-		    typeLevel.setOpaque(false);
-		    flavor.setOpaque(false);
-		    name.setBackground(new Color(0, 0, 0 ,0));
-		    keywords.setBackground(new Color(0, 0, 0 ,0));
-		    attackTypeParameter1.setBackground(new Color(0, 0, 0 ,0));
-		    attackTypeParameter2.setBackground(new Color(0, 0, 0 ,0));
-		    typeLevel.setBackground(new Color(0, 0, 0, 0));
-//		    flavor.setBackground(new Color(0, 0, 0 ,0));
-		    flavor.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
-		    name.setForeground(new Color(239, 237, 217));
-		    typeLevel.setForeground(new Color(239, 237, 217));
-		    keywords.setForeground(new Color(95, 8, 14));
-		    setJTextPaneFont(flavor, font.deriveFont(Font.ITALIC, 15.0f), new Color(115, 131, 255));
-		    name.setHorizontalAlignment(JTextField.CENTER);
-		    SimpleAttributeSet attribs = new SimpleAttributeSet();  
-		    StyleConstants.setAlignment(attribs , StyleConstants.ALIGN_CENTER);  
-		    flavor.setParagraphAttributes(attribs,true);  
 		    name.addActionListener(this);
+		    newParam.addActionListener(this);
+		    delParam.addActionListener(this);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -104,6 +82,7 @@ public class CardEditorScreen extends JPanel implements ActionListener
 			break;
 		}
 		JPanel center = new JPanel();
+		canvas = new CardPanel();
 		center.add(canvas, BorderLayout.CENTER);
 		this.add(toolBar, BorderLayout.NORTH);
 		this.add(center, BorderLayout.CENTER);
@@ -132,28 +111,44 @@ public class CardEditorScreen extends JPanel implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		JComboBox c = (JComboBox)e.getSource();
-		if(c.equals(powerType))
-		{
-			card.setPowerType((String)c.getSelectedItem());
+		try {
+			JComboBox c = (JComboBox)e.getSource();
+			if(c.equals(powerType))
+			{
+				card.setPowerType((String)c.getSelectedItem());
+			}
+			else if(c.equals(tier))
+			{
+				card.setTier((String)c.getSelectedItem());
+			}
+			else if(c.equals(actionType))
+			{
+				card.setActionType((String)c.getSelectedItem());
+			}
+			else if(c.equals(attackType))
+			{
+				card.setAttackType((String)c.getSelectedItem());
+			}
+			else if(c.equals(classs))
+			{
+				card.setClasss((String)c.getSelectedItem());
+			}
+		} catch(Exception e1) {
 		}
-		else if(c.equals(tier))
-		{
-			card.setTier((String)c.getSelectedItem());
+		try {
+			JButton b = (JButton)e.getSource();
+			if(b.equals(newParam) && body.size() < 5)
+			{
+				body.add(new BodyParam());
+				canvas.addStuff();
+			}
+			else if(b.equals(delParam))
+			{
+				body.remove(body.size() - 1);
+				canvas.addStuff();
+			}
+		} catch(Exception e1) {
 		}
-		else if(c.equals(actionType))
-		{
-			card.setActionType((String)c.getSelectedItem());
-		}
-		else if(c.equals(attackType))
-		{
-			card.setAttackType((String)c.getSelectedItem());
-		}
-		else if(c.equals(classs))
-		{
-			card.setClasss((String)c.getSelectedItem());
-		}
-		System.out.println((String)c.getSelectedItem());
 		canvas.repaint();
 	}
 	class CardPanel extends JPanel
@@ -163,12 +158,60 @@ public class CardEditorScreen extends JPanel implements ActionListener
 			this.setBounds(0, 0, 375, 525);
 			this.setLayout(null);
 			name.setBounds(75, 20, 300, 40);
+			name.setFont(titleFont);
+		    keywords.setFont(font);
+		    attackTypeParameter1.setFont(font);
+		    attackTypeParameter2.setFont(font);
+		    typeLevel.setFont(font);
+		    name.setOpaque(false);
+		    keywords.setOpaque(false);
+		    attackTypeParameter1.setOpaque(false);
+		    attackTypeParameter2.setOpaque(false);
+		    typeLevel.setOpaque(false);
+		    flavor.setOpaque(false);
+		    name.setBackground(new Color(0, 0, 0 ,0));
+		    keywords.setBackground(new Color(0, 0, 0 ,0));
+		    attackTypeParameter1.setBackground(new Color(0, 0, 0 ,0));
+		    attackTypeParameter2.setBackground(new Color(0, 0, 0 ,0));
+		    typeLevel.setBackground(new Color(0, 0, 0, 0));
+//		    flavor.setBackground(new Color(0, 0, 0 ,0));
+		    flavor.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
+		    name.setForeground(new Color(239, 237, 217));
+		    typeLevel.setForeground(new Color(239, 237, 217));
+		    keywords.setForeground(new Color(95, 8, 14));
+		    setJTextPaneFont(flavor, font.deriveFont(Font.ITALIC, 15.0f), new Color(115, 131, 255));
+		    name.setHorizontalAlignment(JTextField.CENTER);
+		    SimpleAttributeSet attribs = new SimpleAttributeSet();  
+		    StyleConstants.setAlignment(attribs , StyleConstants.ALIGN_CENTER);  
+		    flavor.setParagraphAttributes(attribs,true);
+			body.add(new BodyParam());
+		    addStuff();
+		}
+		
+		public void addStuff()
+		{
+			this.removeAll();
 			this.add(name);
 			this.add(keywords);
 			this.add(attackTypeParameter1);
 			this.add(attackTypeParameter2);
 			this.add(typeLevel);
 			this.add(flavor);
+			this.add(newParam);
+			this.add(delParam);
+			for(int i = 0; i < body.toArray().length; i++)
+			{
+				BodyParam o = (BodyParam)body.toArray()[i];
+				this.add(o.getNamef());
+				this.add(o.getBodyf());
+				o.getNamef().setBounds(10, 145 + 50 * i, 100, 20);
+				o.getBodyf().setBounds(115, 145 + 50 * i, 250, 40);
+				o.getNamef().setFont(font.deriveFont(Font.BOLD, 15.0f));
+				o.getBodyf().setFont(font.deriveFont(15.0f));
+				o.getNamef().setOpaque(false);
+				o.getBodyf().setOpaque(false);
+			    o.getBodyf().setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
+			}
 		}
 		
 		public Dimension getPreferredSize() {
@@ -178,7 +221,6 @@ public class CardEditorScreen extends JPanel implements ActionListener
 		
 		public void paintComponent(Graphics g1d)
 		{
-			System.out.println(flavor.getText());
 			Graphics2D g = (Graphics2D)g1d; 
 			super.paintComponent(g);
 			FontMetrics metricst = g.getFontMetrics(titleFont);
@@ -286,6 +328,14 @@ public class CardEditorScreen extends JPanel implements ActionListener
 			{
 			}
 			flavor.setBounds(10, 400, 285, 60);
+			newParam.setBounds(10, 140 + body.toArray().length * 50, 50, 20);
+			delParam.setBounds(65, 140 + body.toArray().length * 50, 50, 20);
+			g.setFont(font.deriveFont(Font.BOLD, 15.0f));
+			g.setColor(Color.BLACK);
+			for(int i = 0; i < body.toArray().length; i++)
+			{
+				g.drawString(":", 110, 158 + 50 * i);
+			}
 		}
 	}
 	public static void setJTextPaneFont(JTextPane jtp, Font font, Color c)

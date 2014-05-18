@@ -31,7 +31,7 @@ public class Card
 	private String attackTypeParameter2;
 	private String typeLevel;
 	private String flavor;
-	private ArrayList<String> body = new ArrayList<String>();
+	private ArrayList<BodyParam> body = new ArrayList<BodyParam>();
 
 	public Card(CardType type)
 	{
@@ -546,12 +546,12 @@ public class Card
 		this.flavor = flavor;
 	}
 
-	public ArrayList<String> getBody()
+	public ArrayList<BodyParam> getBody()
 	{
 		return body;
 	}
 
-	public void setBody(ArrayList<String> body)
+	public void setBody(ArrayList<BodyParam> body)
 	{
 		this.body = body;
 	}
