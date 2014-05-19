@@ -1,9 +1,14 @@
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.swing.JFileChooser;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 
@@ -20,17 +25,17 @@ public class Card
 	private BufferedImage bgImage;
 	private BufferedImage actionTypeImage;
 	private BufferedImage attackTypeImage;
-	private String powerType;
-	private String tier;
-	private String actionType;
-	private String attackType;
-	private String classs;
-	private String name;
-	private String keywords;
-	private String attackTypeParameter1;
-	private String attackTypeParameter2;
-	private String typeLevel;
-	private String flavor;
+	private String name = null;
+	private String powerType = null;
+	private String tier = null;
+	private String actionType = null;
+	private String attackType = null;
+	private String classs = null;
+	private String keywords = null;
+	private String attackTypeParameter1 = null;
+	private String attackTypeParameter2 = null;
+	private String typeLevel = null;
+	private String flavor = null;
 	private ArrayList<BodyParam> body = new ArrayList<BodyParam>();
 
 	public Card(CardType type)
@@ -56,6 +61,53 @@ public class Card
 		case ITEM:
 //			bgImage = ImageIO.read(new File());
 			break;
+		}
+	}
+	
+	public void save()
+	{
+		JFileChooser fc = new JFileChooser();
+		File file = null;
+		int returnVal = fc.showSaveDialog(new FileChooserPanel());
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            file = fc.getSelectedFile();
+        } else {
+        }
+		PrintWriter writer;
+		try {
+			writer = new PrintWriter(file, "UTF-8");
+//			private String name;
+//			private String powerType;
+//			private String tier;
+//			private String actionType;
+//			private String attackType;
+//			private String classs;
+//			private String keywords;
+//			private String attackTypeParameter1;
+//			private String attackTypeParameter2;
+//			private String typeLevel;
+//			private String flavor;
+			try {writer.println("<name>" + this.name + "</name>");} catch (Exception e){}
+			try {writer.println("<powerType>" + this.powerType + "</powerType>");} catch (Exception e){}
+			try {writer.println("<tier>" + this.tier + "</tier>");} catch (Exception e){}
+			try {writer.println("<actionType>" + this.actionType + "</actionType>");} catch (Exception e){}
+			try {writer.println("<attackType>" + this.attackType + "</attackType>");} catch (Exception e){}
+			try {writer.println("<class>" + this.classs + "</class>");} catch (Exception e){}
+			try {writer.println("<keywords>" + this.keywords + "</keywords>");} catch (Exception e){}
+			try {writer.println("<attackTypeParameter1>" + this.attackTypeParameter1 + "</attackTypeParameter1>");} catch (Exception e){}
+			try {writer.println("<attackTypeParameter2>" + this.attackTypeParameter2 + "</attackTypeParameter2>");} catch (Exception e){}
+			try {writer.println("<typeLevel>" + this.typeLevel + "</typeLevel>");} catch (Exception e){}
+			try {writer.println("<flavor>" + this.flavor + "</flavor>");} catch (Exception e){}
+			try {
+				for(int i = 0; i < this.body.toArray().length; i++)
+				{
+					writer.println("<bodyParam" + i + "><name>" + ((BodyParam)body.toArray()[i]).getNamef());
+				}
+			} catch (Exception e) {	
+			}
+			writer.close();
+		} catch (FileNotFoundException e) {
+		} catch (UnsupportedEncodingException e) {
 		}
 	}
 	

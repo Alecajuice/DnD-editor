@@ -30,9 +30,9 @@ public class CardEditorScreen extends JPanel implements ActionListener
 	JComboBox tier = new JComboBox(tiers);
 	String[] actionTypes = {"Action Type", "Standard Action", "Minor Action", "Immediate Interrupt", "Free Action", "No Action"};
 	JComboBox actionType = new JComboBox(actionTypes);
-	String[] attackTypes = {"Power Type", "Personal", "Ranged", "Melee Weapon", "Ranged Weapon", "Close Burst", "Area", "Melee Touch", "Melee or Ranged Weapon"};
+	String[] attackTypes = {"Attack Type", "Personal", "Ranged", "Melee Weapon", "Ranged Weapon", "Close Burst", "Area", "Melee Touch", "Melee or Ranged Weapon"};
 	JComboBox attackType = new JComboBox(attackTypes);
-	String[] classes = {"Classes", "Ardent", "Artificer", "Assassin", "Avenger", "Barbarian", "Bard", "Battlemind", "Bladesinger", "Cleric", "Druid", "Fighter", "Invoker", "Monk", "Paladin", "Psion", "Ranger", "Rogue", "Runepriest", "Seeker", "Shaman", "Sorceror", "Swordmage", "Vampire", "Warden", "Warlock", "Warlord", "Wizard"};
+	String[] classes = {"Class", "Ardent", "Artificer", "Assassin", "Avenger", "Barbarian", "Bard", "Battlemind", "Bladesinger", "Cleric", "Druid", "Fighter", "Invoker", "Monk", "Paladin", "Psion", "Ranger", "Rogue", "Runepriest", "Seeker", "Shaman", "Sorceror", "Swordmage", "Vampire", "Warden", "Warlock", "Warlord", "Wizard"};
 	JComboBox classs = new JComboBox(classes);
 	JTextField name = new JTextField();
 	JTextField keywords = new JTextField();
@@ -59,8 +59,7 @@ public class CardEditorScreen extends JPanel implements ActionListener
 		    ge.registerFont(font);
 		    font = font.deriveFont(20.0f);
 		    name.addActionListener(this);
-		    newParam.addActionListener(this);
-		    delParam.addActionListener(this);
+		    save.addActionListener(this);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -105,6 +104,8 @@ public class CardEditorScreen extends JPanel implements ActionListener
 		actionType.addActionListener(this);
 		attackType.addActionListener(this);
 		classs.addActionListener(this);
+	    newParam.addActionListener(this);
+	    delParam.addActionListener(this);
 		
 	}
 
@@ -137,7 +138,12 @@ public class CardEditorScreen extends JPanel implements ActionListener
 		}
 		try {
 			JButton b = (JButton)e.getSource();
-			if(b.equals(newParam) && body.size() < 5)
+			if(b.equals(save))
+			{
+				System.out.println("save");
+				save();
+			}
+			else if(b.equals(newParam) && body.size() < 5)
 			{
 				body.add(new BodyParam());
 				canvas.addStuff();
@@ -151,6 +157,24 @@ public class CardEditorScreen extends JPanel implements ActionListener
 		}
 		canvas.repaint();
 	}
+	
+	public void save()
+	{
+		card.setName(name.getText());
+		if(!powerType.getSelectedItem().equals("Power Type")) card.setPowerType((String)powerType.getSelectedItem());
+		if(!tier.getSelectedItem().equals("Tier")) card.setTier((String)tier.getSelectedItem());
+		if(!actionType.getSelectedItem().equals("Action Type")) card.setActionType((String)actionType.getSelectedItem());
+		card.setKeywords(keywords.getText());
+		if(!attackType.getSelectedItem().equals("Attack Type")) card.setAttackType((String)attackType.getSelectedItem());
+		card.setAttackTypeParameter1(attackTypeParameter1.getText());
+		card.setAttackTypeParameter2(attackTypeParameter2.getText());
+		card.setBody(body);
+		card.setFlavor(flavor.getText());
+		if(!powerType.getSelectedItem().equals("Class")) card.setClasss((String)classs.getSelectedItem());
+		card.setTypeLevel(typeLevel.getText());
+		card.save();
+	}
+	
 	class CardPanel extends JPanel
 	{
 		public CardPanel()
